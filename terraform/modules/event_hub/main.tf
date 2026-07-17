@@ -18,10 +18,9 @@ resource "azurerm_eventhub" "this" {
   message_retention   = var.message_retention
 
   capture_description {
-    name             = "EventHubArchive.AzureBlockBlob"
     enabled          = true
     encoding         = "Avro"
-    interval_seconds = 300
+    interval_in_seconds = 300
     size_limit_in_bytes = 314572800
 
     destination {
