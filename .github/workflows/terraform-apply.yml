@@ -27,21 +27,21 @@ jobs:
 
       - name: Terraform Init
         run: |
-          cd terraform/environments/dev
+          cd terraform
           terraform init -input=false
 
       - name: Terraform Apply
         run: |
-          cd terraform/environments/dev
-          terraform apply -auto-approve -input=false
+          cd terraform
+          terraform apply -auto-approve -input=false -var-file=environments/dev/terraform.tfvars
 
       - name: Terraform Output
         run: |
-          cd terraform/environments/dev
+          cd terraform
           terraform output -json > outputs.json
 
       - name: Upload Terraform Outputs
         uses: actions/upload-artifact@v4
         with:
           name: terraform-outputs
-          path: terraform/environments/dev/outputs.json
+          path: terraform/outputs.json

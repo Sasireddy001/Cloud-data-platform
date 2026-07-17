@@ -26,19 +26,6 @@ event_hub_capacity      = 2
 databricks_workspace_name = "cloud-databricks-ws-prod"
 databricks_sku            = "premium"
 
-# Advanced features (enabled for prod)
-customer_managed_key_enabled = true
-vnet_peering_enabled         = true
-
-# Key Vault for customer-managed key
-key_vault_id         = "/subscriptions/<subscription-id>/resourceGroups/<rg-name>/providers/Microsoft.KeyVault/vaults/<vault-name>"
-key_vault_key_name   = "databricks-cmk"
-key_vault_key_version = "current"
-
-# VNet peering
-vnet_id             = "/subscriptions/<subscription-id>/resourceGroups/<rg-name>/providers/Microsoft.Network/virtualNetworks/<vnet-name>"
-databricks_vnet_id  = "/subscriptions/<subscription-id>/resourceGroups/<rg-name>/providers/Microsoft.Network/virtualNetworks/<databricks-vnet-name>"
-
 # Tags
 tags = {
   Project     = "Cloud Data Platform"

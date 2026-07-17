@@ -9,18 +9,16 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 3.0"
     }
-    databricks = {
-      source  = "databricks/databricks"
-      version = "~> 1.0"
-    }
   }
   
-  backend "azurerm" {
-    resource_group_name  = "tfstate-rg"
-    storage_account_name = "tfstatestorage"
-    container_name       = "tfstate"
-    key                  = "cloud-data-platform.tfstate"
-  }
+  # Use local backend by default. For production, configure remote backend
+  # with Azure Storage or Terraform Cloud by uncommenting and filling backend block below.
+  # backend "azurerm" {
+  #   resource_group_name  = "tfstate-rg"
+  #   storage_account_name = "tfstatestorage"
+  #   container_name       = "tfstate"
+  #   key                  = "cloud-data-platform.tfstate"
+  # }
 }
 
 provider "azurerm" {
@@ -73,20 +71,7 @@ module "databricks" {
   workspace_name      = var.databricks_workspace_name
   sku                 = var.databricks_sku
 
-  customer_managed_key_enabled = var.customer_managed_key_enabled
-  key_vault_id                = var.key_vault_id
-  key_vault_key_name          = var.key_vault_key_name
-  key_vault_key_version       = var.key_vault_key_version
-
-  vnet_peering_enabled = var.vnet_peering_enabled
-  vnet_id              = var.vnet_id
-  databricks_vnet_id   = var.databricks_vnet_id
-
   tags = var.tags
-}
-
-provider "databricks" {
-  host = module.databricks.databricks_host
 }
 
 # Variables are defined in variables.tf

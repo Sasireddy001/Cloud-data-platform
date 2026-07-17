@@ -13,6 +13,7 @@ resource "azurerm_storage_account" "this" {
   location                 = azurerm_resource_group.this.location
   account_tier             = "Standard"
   account_replication_type = var.account_replication_type
+  is_hns_enabled           = true
 
   tags = var.tags
 }

@@ -18,18 +18,23 @@ jobs:
         with:
           terraform_version: "1.5.0"
 
+      - name: Configure Azure credentials
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Terraform Init
         run: |
-          cd terraform/environments/dev
+          cd terraform
           terraform init -input=false
 
       - name: Terraform Plan
         run: |
-          cd terraform/environments/dev
-          terraform plan -out=tfplan -input=false
+          cd terraform
+          terraform plan -out=tfplan -input=false -var-file=environments/dev/terraform.tfvars
 
       - name: Save Terraform Plan
         uses: actions/upload-artifact@v4
         with:
           name: tfplan
-          path: terraform/environments/dev/tfplan
+          path: terraform/tfplan
