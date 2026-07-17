@@ -1,12 +1,25 @@
 name: Terraform Apply
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'terraform/**'
-      - '.github/workflows/terraform-apply.yml'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - prod
+
+# Note: Uncomment the push block below only after setting AZURE_CREDENTIALS secret.
+# on:
+#   push:
+#     branches:
+#       - main
+#     paths:
+#       - 'terraform/**'
+#       - '.github/workflows/terraform-apply.yml'
 
 jobs:
   apply:
@@ -15,10 +28,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Check Azure credentials secret
+        run: |
+          if [ -z "${{ secrets.AZURE_CREDENTIALS }}" ]; then
+            echo "ERROR: AZURE_CREDENTIALS secret is not configured."
+            echo "Go to Settings -> Secrets and variables -> Actions and add AZURE_CREDENTIALS."
+            echo "See README.md for setup instructions."
+            exit 1
+          fi
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: "1.5.0"
+          terraform_version: "1.9.0"
 
       - name: Configure Azure credentials
         uses: azure/login@v2
@@ -33,7 +55,7 @@ jobs:
       - name: Terraform Apply
         run: |
           cd terraform
-          terraform apply -auto-approve -input=false -var-file=environments/dev/terraform.tfvars
+          terraform apply -auto-approve -input=false -var-file=environments/${{ github.event.inputs.environment || 'dev' }}/terraform.tfvars
 
       - name: Terraform Output
         run: |
