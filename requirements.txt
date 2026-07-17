@@ -1,0 +1,31 @@
+# Cloud-Native Streaming Data Platform dependencies
+
+# Core data processing
+pyspark>=3.4.0
+
+# Delta Lake
+delta-spark>=2.4.0
+
+# Azure Event Hubs integration for PySpark
+azure-eventhub>=5.11.0
+
+# Azure identity and storage
+azure-identity>=1.14.0
+azure-storage-blob>=12.18.0
+
+# Configuration and validation
+pydantic>=2.0.0
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# Linting and formatting
+black>=23.0.0
+ruff>=0.1.0
+
+# Type checking
+mypy>=1.5.0
+
+# Environment management
+python-dotenv>=1.0.0

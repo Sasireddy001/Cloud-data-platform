@@ -18,25 +18,19 @@ resource "azurerm_storage_account" "this" {
   tags = var.tags
 }
 
-resource "azurerm_storage_container" "delta" {
-  name                  = var.delta_container_name
-  storage_account_name   = azurerm_storage_account.this.name
-  container_access_type = "private"
-}
-
 resource "azurerm_storage_container" "checkpoints" {
   name                  = var.checkpoint_container_name
-  storage_account_name   = azurerm_storage_account.this.name
+  storage_account_name  = azurerm_storage_account.this.name
   container_access_type = "private"
 }
 
 resource "azurerm_storage_container" "capture" {
   name                  = var.capture_container_name
-  storage_account_name   = azurerm_storage_account.this.name
+  storage_account_name  = azurerm_storage_account.this.name
   container_access_type = "private"
 }
 
 resource "azurerm_storage_data_lake_gen2_filesystem" "delta" {
-  name                = var.delta_filesystem_name
-  storage_account_id   = azurerm_storage_account.this.id
+  name               = var.delta_filesystem_name
+  storage_account_id = azurerm_storage_account.this.id
 }
