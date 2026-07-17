@@ -55,6 +55,29 @@ cloud-data-platform/
 
 ## Quickstart
 
+### GitHub Actions Setup
+
+To run Terraform in GitHub Actions, add the following secrets in your GitHub repository:
+
+**Settings → Secrets and variables → Actions**
+
+- `AZURE_CLIENT_ID`
+- `AZURE_CLIENT_SECRET`
+- `AZURE_SUBSCRIPTION_ID`
+- `AZURE_TENANT_ID`
+
+Create an Azure service principal with Contributor access:
+
+```bash
+az ad sp create-for-rbac \
+  --name "cloud-data-platform-sp" \
+  --role Contributor \
+  --scopes /subscriptions/<subscription-id> \
+  --sdk-auth
+```
+
+Fill in the four secrets from the JSON output.
+
 ### Prerequisites
 - Azure subscription with Contributor access
 - Terraform 1.5.0 or higher

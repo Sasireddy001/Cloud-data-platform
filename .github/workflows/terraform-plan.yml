@@ -13,15 +13,41 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Check Azure credentials secrets
+        run: |
+          missing=""
+          if [ -z "${{ secrets.AZURE_CLIENT_ID }}" ]; then
+            missing="AZURE_CLIENT_ID $missing"
+          fi
+          if [ -z "${{ secrets.AZURE_CLIENT_SECRET }}" ]; then
+            missing="AZURE_CLIENT_SECRET $missing"
+          fi
+          if [ -z "${{ secrets.AZURE_SUBSCRIPTION_ID }}" ]; then
+            missing="AZURE_SUBSCRIPTION_ID $missing"
+          fi
+          if [ -z "${{ secrets.AZURE_TENANT_ID }}" ]; then
+            missing="AZURE_TENANT_ID $missing"
+          fi
+          if [ -n "$missing" ]; then
+            echo "ERROR: The following GitHub secrets are missing: $missing"
+            echo "Go to Settings -> Secrets and variables -> Actions and add them."
+            echo "Or create a service principal with:"
+            echo "az ad sp create-for-rbac --name \"cloud-data-platform-sp\" --role Contributor --scopes /subscriptions/<subscription-id>"
+            exit 1
+          fi
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: "1.5.0"
+          terraform_version: "1.9.0"
 
       - name: Configure Azure credentials
         uses: azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
 
       - name: Terraform Init
         run: |
