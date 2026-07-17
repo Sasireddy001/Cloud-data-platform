@@ -56,31 +56,60 @@ cloud-data-platform/
 ## Quickstart
 
 ### Prerequisites
-- Azure account or AWS account
-- Terraform installed
-- GitHub account (for CI/CD)
+- Azure subscription with Contributor access
+- Terraform 1.5.0 or higher
+- Azure CLI installed and configured
+- Python 3.10 or higher (for streaming job)
+- Databricks account (optional, for production deployment)
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/Sasireddy001/cloud-data-platform.git
-cd cloud-data-platform
+git clone https://github.com/Sasireddy001/Cloud-data-platform.git
+cd Cloud-data-platform
 ```
 
 ### 2. Configure Terraform
 
 ```bash
-cd terraform/environments/dev
+cd terraform
 terraform init
-terraform plan
-terraform apply
+terraform plan -var-file=environments/dev/terraform.tfvars
+terraform apply -var-file=environments/dev/terraform.tfvars
 ```
 
-### 3. Run the streaming job
+### 3. Get infrastructure outputs
 
 ```bash
-cd ../..
-python -m src.streaming_job
+terraform output
+```
+
+### 4. Configure environment variables
+
+```bash
+export EVENT_HUB_NAMESPACE_NAME=$(terraform output -raw event_hub_namespace_name)
+export EVENT_HUB_NAME=$(terraform output -raw event_hub_name)
+export EVENT_HUB_CONNECTION_STRING=$(terraform output -raw event_hub_connection_string)
+export DELTA_PATH=$(terraform output -raw delta_path)
+export CHECKPOINT_PATH=$(terraform output -raw checkpoint_path)
+export DATABRICKS_HOST=$(terraform output -raw databricks_host)
+```
+
+### 5. Run the streaming job
+
+```bash
+cd ..
+python src/streaming_job.py
+```
+
+### Databricks Deployment
+
+```bash
+# 1. Create a Databricks workspace (or use existing)
+# 2. Create a cluster
+# 3. Upload src/ directory to Databricks
+# 4. Create a job in Databricks to run streaming_job.py
+# 5. Configure job with environment variables from Terraform outputs
 ```
 
 ## Features
