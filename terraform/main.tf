@@ -3,14 +3,14 @@
 
 terraform {
   required_version = ">= 1.5.0"
-  
+
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.0"
+      version = "~> 3.116.0"
     }
   }
-  
+
   # Use local backend by default. For production, configure remote backend
   # with Azure Storage or Terraform Cloud by uncommenting and filling backend block below.
   # backend "azurerm" {
@@ -23,6 +23,7 @@ terraform {
 
 provider "azurerm" {
   features {}
+  skip_provider_registration = false
 }
 
 # Storage module (includes resource group)
