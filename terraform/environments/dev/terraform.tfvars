@@ -26,10 +26,6 @@ event_hub_capacity      = 1
 databricks_workspace_name = "cloud-databricks-ws-dev"
 databricks_sku            = "premium"
 
-# Advanced features (disabled for dev)
-customer_managed_key_enabled = false
-vnet_peering_enabled         = false
-
 # Tags
 tags = {
   Project     = "Cloud Data Platform"
