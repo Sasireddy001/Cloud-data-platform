@@ -50,24 +50,3 @@ resource "azurerm_eventhub_authorization_rule" "this" {
   send   = true
   manage = false
 }
-
-output "namespace_name" {
-  value = azurerm_eventhub_namespace.this.name
-}
-
-output "event_hub_name" {
-  value = azurerm_eventhub.this.name
-}
-
-output "connection_string" {
-  value     = azurerm_eventhub_authorization_rule.this.primary_connection_string
-  sensitive = true
-}
-
-output "namespace_id" {
-  value = azurerm_eventhub_namespace.this.id
-}
-
-output "authorization_rule_id" {
-  value = azurerm_eventhub_authorization_rule.this.id
-}

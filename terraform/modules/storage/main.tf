@@ -40,32 +40,3 @@ resource "azurerm_storage_data_lake_gen2_filesystem" "delta" {
   name                = var.delta_filesystem_name
   storage_account_id   = azurerm_storage_account.this.id
 }
-
-output "resource_group_name" {
-  value = azurerm_resource_group.this.name
-}
-
-output "resource_group_id" {
-  value = azurerm_resource_group.this.id
-}
-
-output "storage_account_name" {
-  value = azurerm_storage_account.this.name
-}
-
-output "storage_account_id" {
-  value = azurerm_storage_account.this.id
-}
-
-output "primary_key" {
-  value     = azurerm_storage_account.this.primary_access_key
-  sensitive = true
-}
-
-output "delta_path" {
-  value = "abfss://${var.delta_filesystem_name}@${azurerm_storage_account.this.name}.dfs.core.windows.net/delta"
-}
-
-output "checkpoint_path" {
-  value = "abfss://${var.delta_filesystem_name}@${azurerm_storage_account.this.name}.dfs.core.windows.net/checkpoints"
-}
