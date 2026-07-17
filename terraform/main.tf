@@ -27,8 +27,66 @@ provider "azurerm" {
   features {}
 }
 
+# Storage module (includes resource group)
+module "storage" {
+  source = "./modules/storage"
+
+  resource_group_name     = var.resource_group_name
+  location                = var.location
+  storage_account_name    = var.storage_account_name
+  account_replication_type = var.account_replication_type
+  delta_container_name   = var.delta_container_name
+  checkpoint_container_name = var.checkpoint_container_name
+  capture_container_name  = var.capture_container_name
+  delta_filesystem_name   = var.delta_filesystem_name
+
+  tags = var.tags
+}
+
+# Event Hub module
+module "event_hub" {
+  source = "./modules/event_hub"
+
+  namespace_name           = var.event_hub_namespace_name
+  location                = var.location
+  resource_group_name     = module.storage.resource_group_name
+  event_hub_name          = var.event_hub_name
+  partition_count         = var.partition_count
+  message_retention       = var.message_retention
+  consumer_group_name     = var.consumer_group_name
+  authorization_rule_name = var.authorization_rule_name
+  storage_account_id      = module.storage.storage_account_id
+  storage_container_name  = var.capture_container_name
+
+  sku     = var.event_hub_sku
+  capacity = var.event_hub_capacity
+
+  tags = var.tags
+}
+
+# Databricks module
+module "databricks" {
+  source = "./modules/databricks"
+
+  resource_group_name = module.storage.resource_group_name
+  location            = var.location
+  workspace_name      = var.databricks_workspace_name
+  sku                 = var.databricks_sku
+
+  customer_managed_key_enabled = var.customer_managed_key_enabled
+  key_vault_id                = var.key_vault_id
+  key_vault_key_name          = var.key_vault_key_name
+  key_vault_key_version       = var.key_vault_key_version
+
+  vnet_peering_enabled = var.vnet_peering_enabled
+  vnet_id              = var.vnet_id
+  databricks_vnet_id   = var.databricks_vnet_id
+
+  tags = var.tags
+}
+
 provider "databricks" {
-  host = azurerm_databricks_workspace.workspace.workspace_url
+  host = module.databricks.databricks_host
 }
 
 # Variables are defined in variables.tf
