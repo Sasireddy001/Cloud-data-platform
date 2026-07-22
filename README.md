@@ -1,5 +1,10 @@
 # Cloud-Native Streaming Data Platform
 
+[![Architecture](https://img.shields.io/badge/Architecture-2563EB)](ARCHITECTURE.md)
+[![System Design](https://img.shields.io/badge/System%20Design-06B6D4)](SYSTEM_DESIGN.md)
+[![Terraform](https://img.shields.io/badge/Terraform-844FBA?logo=terraform&logoColor=white)](terraform)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 A production-ready streaming data platform built on Azure/AWS with Terraform, demonstrating Cloud Data Engineer and Data Platform Engineer capabilities.
 
 ## Architecture
