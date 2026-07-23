@@ -144,7 +144,7 @@ python src/streaming_job.py
 
 - **Infrastructure as Code** — All infrastructure defined in Terraform
 - **Streaming pipeline** — PySpark Structured Streaming with Delta Lake
-- **Data quality** — Validation with Great Expectations/Pandera
+- **Data quality** — Schema and row-level validation checks in the streaming job and validation notebooks
 - **CI/CD** — Automated Terraform deployments via GitHub Actions
 - **Multi-environment** — Dev and prod configurations
 
