@@ -5,7 +5,7 @@
 [![Terraform](https://img.shields.io/badge/Terraform-844FBA?logo=terraform&logoColor=white)](terraform)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A production-ready streaming data platform built on Azure/AWS with Terraform, demonstrating Cloud Data Engineer and Data Platform Engineer capabilities.
+A production-ready streaming data platform built on Azure/AWS with Terraform, demonstrating Cloud Data Engineer and Data & AI Platform Engineer capabilities.
 
 ## Architecture
 
@@ -152,7 +152,7 @@ python src/streaming_job.py
 
 - **Sasidhar Mopuru** — Data & AI Platform Engineer
 - [GitHub](https://github.com/Sasireddy001)
-- [Portfolio](https://sasireddy001.github.io/Portfolio)
+- [Portfolio](https://sasireddy001.github.io/Portfolio/)
 - [LinkedIn](https://www.linkedin.com/in/sasidhar-mopuru-417a03233)
 - Email: sasidharmopuru@gmail.com
 
